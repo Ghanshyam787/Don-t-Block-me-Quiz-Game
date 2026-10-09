@@ -24,8 +24,10 @@ const tx = (q, lang) => {
 const pub = (q, lang) => { const v = tx(q, lang); return { id: v.id, text: v.text, ic: v.ic || null, options: v.options }; };
 
 // ---------- Storage: local = data/db.json, Vercel = Upstash Redis (REST) ----------
-const RURL = process.env.UPSTASH_REDIS_REST_URL || process.env.KV_REST_API_URL;
-const RTOK = process.env.UPSTASH_REDIS_REST_TOKEN || process.env.KV_REST_API_TOKEN;
+// Variable ka naam kisi bhi prefix ke saath ho sakta hai (jaise GK_KV_REST_API_URL), isliye naam se dhundhte hain
+const envFind = re => { const k = Object.keys(process.env).find(n => re.test(n)); return k ? process.env[k] : undefined; };
+const RURL = envFind(/(^|_)(KV_REST_API_URL|UPSTASH_REDIS_REST_URL)$/);
+const RTOK = envFind(/(^|_)(KV_REST_API_TOKEN|UPSTASH_REDIS_REST_TOKEN)$/);
 const FILE = path.join(__dirname, 'data', 'db.json');
 let mem = null;
 const load = () => { if (!mem) { mem = fs.existsSync(FILE) ? JSON.parse(fs.readFileSync(FILE, 'utf8')) : {}; if (mem.quizzes) mem = {}; } };
