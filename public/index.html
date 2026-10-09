@@ -1,0 +1,331 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>How well do you know me?</title>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;800&family=Noto+Sans+Devanagari:wght@500;700&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#1d2547;--blue:#0a8bff;--pink:#ff5c8a;--sun:#ffd84d;--line:#cfe3f7;--green:#22c55e;--red:#ef4444;--ex:0;--ey:0}
+*{box-sizing:border-box}
+body{margin:0;color:var(--ink);font-family:'Baloo 2','Noto Sans Devanagari',system-ui,sans-serif;font-size:18px;font-weight:500;background:linear-gradient(#58b4f6 0,#9fd8fb 220px,#e3f3ff 460px,#fff3f8 100%) fixed;min-height:100vh;overflow-x:hidden}
+/* floating world */
+.bg{position:fixed;inset:0;z-index:-1;overflow:hidden;pointer-events:none}
+.bg i{position:absolute;width:190px;height:60px;border-radius:99px;background:#fff;opacity:.55;filter:blur(2px);animation:drift 10s ease-in-out infinite alternate}
+.bg i:nth-child(1){top:90px;left:-30px}.bg i:nth-child(2){top:230px;right:-40px;animation-duration:13s}.bg i:nth-child(3){top:380px;left:25%;animation-duration:16s;opacity:.35}
+.bg b{position:absolute;bottom:-60px;font-size:26px;animation:rise 20s linear infinite;opacity:.8}
+.bg b:nth-of-type(1){left:8%}.bg b:nth-of-type(2){left:28%;animation-delay:-7s;font-size:20px}.bg b:nth-of-type(3){left:52%;animation-delay:-12s}.bg b:nth-of-type(4){left:74%;animation-delay:-3s;font-size:22px}.bg b:nth-of-type(5){left:90%;animation-delay:-15s}
+#app{max-width:520px;margin:0 auto;padding:16px 16px 70px;perspective:1100px}
+#app>*{animation:pop .6s cubic-bezier(.2,1.4,.4,1) both}#app>*:nth-child(2){animation-delay:.07s}#app>*:nth-child(3){animation-delay:.14s}#app>*:nth-child(4){animation-delay:.21s}
+h1{font-size:30px;line-height:1.15;margin:8px 0;text-align:center;font-weight:800}
+h2{font-size:23px;line-height:1.25;margin:8px 0 12px;text-align:center;font-weight:800}h3{margin:18px 0 6px;font-weight:800}
+.sticker{color:#ff5c8a;-webkit-text-stroke:10px #fff;paint-order:stroke fill;font-size:40px;text-shadow:0 1px 0 #e0406e,0 2px 0 #e0406e,0 3px 0 #e0406e,0 4px 0 #e0406e,0 5px 0 #e0406e,0 6px 0 #e0406e,0 14px 14px #0003}
+.wave span{display:inline-block;animation:wv 2.2s ease-in-out infinite;animation-delay:calc(var(--i)*.16s)}
+.scene{position:relative;height:190px;margin-top:6px}
+.rb{position:absolute;left:50%;top:0;width:310px;transform:translateX(-50%);animation:pulse 4s ease-in-out infinite}
+.scene .duo{position:absolute;left:0;right:0;bottom:0}
+.ribbon{display:inline-block;background:#fff;border:3px solid #ffd0de;border-radius:14px;padding:2px 20px;font-weight:800;box-shadow:0 6px 0 #ffd0de,0 12px 16px #1c6fb840;transform:rotate(-2deg);animation:wob 3s ease-in-out infinite}
+.hero{text-align:center;position:relative}
+.spk{position:absolute;font-size:22px;animation:tw 2.6s ease-in-out infinite}
+/* characters */
+.duo{display:flex;justify-content:center;gap:0;perspective:500px}
+.c3{display:inline-block;transform-style:preserve-3d;animation:sw 4.5s ease-in-out infinite;cursor:pointer}.duo .c3:last-child{animation-delay:-2.2s}
+.chr{filter:drop-shadow(0 10px 6px #0003);animation:bob 3s ease-in-out infinite;display:block}
+.c3.jl .chr{animation:jelly .6s}
+.eye{transform-box:fill-box;transform-origin:center;animation:blink 4s infinite}
+.pp{transform:translate(calc(var(--ex)*2.6px),calc(var(--ey)*2.2px));transition:transform .12s}
+.arm{transform-box:fill-box;transform-origin:50% 5%}.al{animation:wave 2.4s ease-in-out infinite}.ar{animation:wave 2.4s ease-in-out infinite reverse}
+.tear{animation:tearf 1.4s ease-in infinite}
+.clouds{height:64px;margin:6px -16px -30px;overflow:hidden}
+.clouds div{height:100%;width:112%;margin-left:-6%;background:radial-gradient(circle at 8% 100%,#fff 36px,#0000 37px),radial-gradient(circle at 28% 115%,#fff 50px,#0000 51px),radial-gradient(circle at 52% 100%,#fff 42px,#0000 43px),radial-gradient(circle at 76% 115%,#fff 52px,#0000 53px),radial-gradient(circle at 98% 100%,#fff 38px,#0000 39px);animation:drift 7s ease-in-out infinite alternate}
+/* gummy cards + jelly buttons */
+.card{position:relative;background:linear-gradient(#fff,#f8fcff);border-radius:34px;padding:22px 20px;box-shadow:inset 0 5px 0 #fff,0 12px 0 #cfe4f8,0 24px 32px #1c6fb838;margin:18px 0 24px;transition:transform .25s}
+.card:hover{transform:translateY(-3px) rotateX(2deg)}
+.dash{border:3px dashed var(--line);border-radius:24px;padding:16px;text-align:center}
+button,.btn{position:relative;overflow:hidden;font:inherit;font-weight:800;border:0;border-radius:999px;background:linear-gradient(#ffeb85,var(--sun));color:var(--ink);padding:8px 20px;cursor:pointer;box-shadow:0 5px 0 #d9b21c,0 10px 14px #0003,inset 0 3px 0 #fffb,inset 0 -4px 0 #0000000d;transition:transform .1s,box-shadow .1s;text-decoration:none;display:inline-block}
+button:hover:not(:disabled),.btn:hover{animation:jelly .5s}
+button:active:not(:disabled),.btn:active{transform:translateY(5px);box-shadow:0 0 0 #d9b21c,inset 0 3px 0 #fffb}
+button:focus-visible,input:focus-visible,textarea:focus-visible,a:focus-visible{outline:3px solid var(--blue);outline-offset:2px}
+.primary,.wa{width:100%;padding:14px 20px;font-size:21px;text-align:center;color:#fff}
+.primary{background:linear-gradient(#55c0ff,#0a8bff 60%,#0a78e0);box-shadow:0 6px 0 #0a63b8,0 14px 20px #0a63b866,inset 0 3px 0 #ffffffaa,inset 0 -5px 0 #0000001a}
+.wa{background:linear-gradient(#5be98f,#1fb85a);box-shadow:0 6px 0 #14883f,0 14px 20px #14883f55,inset 0 3px 0 #ffffffaa,inset 0 -5px 0 #0000001a;margin-top:12px}
+.primary::after,.wa::after{content:'';position:absolute;top:0;left:-60%;width:36%;height:100%;background:linear-gradient(100deg,#fff0,#fff9,#fff0);transform:skewX(-20deg);animation:shine 3.5s infinite}
+.opt{display:block;width:100%;text-align:start;background:var(--t,#fff);color:var(--ink);border:3px solid var(--b,var(--line));border-radius:24px;box-shadow:0 5px 0 var(--b,var(--line));margin:11px 0;padding:11px 18px}
+.opt:active:not(:disabled){box-shadow:none}
+.grid .opt:nth-child(6n+1),.q .opt:nth-of-type(6n+1){--t:#ffe9f0;--b:#ffc2d6}
+.grid .opt:nth-child(6n+2),.q .opt:nth-of-type(6n+2){--t:#e3fbef;--b:#b2ead0}
+.grid .opt:nth-child(6n+3),.q .opt:nth-of-type(6n+3){--t:#fff7d6;--b:#ffe483}
+.grid .opt:nth-child(6n+4),.q .opt:nth-of-type(6n+4){--t:#efe9ff;--b:#cfc2ff}
+.grid .opt:nth-child(6n+5),.q .opt:nth-of-type(6n+5){--t:#ffeadb;--b:#ffcaa6}
+.grid .opt:nth-child(6n+6),.q .opt:nth-of-type(6n+6){--t:#e3f3ff;--b:#b4dcfa}
+input,textarea{font:inherit;font-weight:600;width:100%;border:3px solid var(--line);border-radius:20px;padding:10px 16px;margin:6px 0;background:#f6faff;color:var(--ink)}
+.row{display:flex;gap:8px;align-items:center;justify-content:space-between}.row>input{flex:1}.row>input[type=radio]{flex:0 0 26px;width:26px;height:26px}
+.top{display:flex;align-items:center;justify-content:space-between;margin-bottom:6px}
+.top .bk{width:46px;height:46px;padding:0;background:#fff;color:var(--blue);font-size:26px;box-shadow:0 5px 0 var(--line),0 8px 14px #1c6fb844}
+.barw{position:relative;margin:14px 0 4px}
+.bar{height:18px;border-radius:99px;background:#fff;overflow:hidden;box-shadow:inset 0 3px 5px #1c6fb844}.bar i{display:block;height:100%;border-radius:99px;background:repeating-linear-gradient(45deg,#ff9ab6 0 10px,#ff7aa0 10px 20px);transition:width .35s}
+.wk{position:absolute;top:-17px;transition:left .35s;pointer-events:none}
+.q .opt{display:flex;align-items:center;gap:12px;padding:8px 14px 8px 8px;transition:transform .15s}
+.q .opt:not(.locked):hover{transform:translateY(-2px) scale(1.015)}
+.pic{width:54px;height:54px;border-radius:18px;background:#fff;display:grid;place-items:center;font-size:32px;flex:0 0 54px;box-shadow:inset 0 -4px 0 #0000001a;overflow:hidden}
+.pic img{width:100%;height:100%;object-fit:cover;border-radius:0}.pic.l{font-size:22px;font-weight:800;color:var(--blue)}
+.tx{flex:1;line-height:1.25}.mk{flex:0 0 36px;font-size:26px;text-align:center}
+.q .opt.sel{--t:#fff0f5;--b:var(--pink)}
+.q .opt.ok{--t:#e4ffee;--b:#22c55e;animation:okp .5s}
+.q .opt.no{--t:#fff0f0;--b:#ef4444;animation:shake .4s}
+.opt.locked{cursor:default}
+.ms{display:grid;place-items:center;margin:-8px auto 0;min-height:96px}.ms.no{animation:shake .4s}
+img{max-width:100%;border-radius:16px}
+.muted{opacity:.7;font-size:15px;margin:4px 0}.err{color:#d6204f;font-weight:800;margin:6px 0}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:14px}.grid .opt{margin:0;text-align:center;padding:14px 8px}
+.g2 .pick{padding:20px 6px;font-size:20px;border-radius:28px}.g2 .pick:nth-child(odd){transform:rotate(-3deg)}.g2 .pick:nth-child(even){transform:rotate(3deg)}
+.em{display:block;font-size:34px;line-height:1.2}
+.ico{display:inline-grid;place-items:center;width:52px;height:52px;border-radius:18px;background:linear-gradient(#ffe9f0,#ffd0de);font-size:28px;flex:0 0 52px;box-shadow:inset 0 -4px 0 #f5b4c7;animation:bob 3s ease-in-out infinite}
+.how{display:flex;gap:14px;align-items:center;padding:12px 0;border-top:2px solid #eef3fa}.how:first-child{border:0}.how p{margin:0}
+.big{font-size:88px;font-weight:800;text-align:center;margin:0;color:var(--pink);line-height:1;-webkit-text-stroke:6px #fff;paint-order:stroke fill;text-shadow:0 5px 0 #e0406e,0 14px 16px #0003;animation:okp .8s}
+.sh{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:14px 0}
+.sh a{background:#fff;color:var(--ink);box-shadow:0 5px 0 var(--line),0 8px 14px #1c6fb822;display:flex;align-items:center;gap:10px;padding:10px 14px;border-radius:24px;font-size:17px;font-weight:800;text-decoration:none}
+.sh a:active{transform:translateY(5px);box-shadow:none}
+.sh .c{width:38px;height:38px;border-radius:50%;display:grid;place-items:center;font-size:20px;flex:0 0 38px}
+.linkbox{display:flex;align-items:center;gap:6px;background:#fff;border:3px solid var(--line);border-radius:99px;padding:6px 6px 6px 14px}
+.linkbox input{border:0;background:none;margin:0;padding:6px 0;flex:1;min-width:0}
+.speech{display:inline-block;background:#fff;border-radius:16px;padding:4px 14px;font-weight:800;font-size:15px;box-shadow:0 6px 14px #1c6fb844;margin-bottom:4px;animation:wob 3s ease-in-out infinite}
+.person{display:flex;align-items:center;gap:10px;width:100%;text-align:start;background:#fff;border-radius:26px;padding:8px 16px 8px 10px;margin:12px 0;box-shadow:0 6px 0 var(--line),0 12px 18px #1c6fb82a;font-size:17px}
+.person .info{flex:1;line-height:1.2}.person small{opacity:.7;display:block}
+.sc{background:#e8f4ff;border-radius:99px;padding:0 12px;font-weight:800;color:var(--pink)}
+.nav{display:flex;gap:10px;margin-top:14px}.nav button{flex:1}
+#toast{position:fixed;left:50%;bottom:26px;transform:translateX(-50%);background:var(--ink);color:#fff;padding:10px 20px;border-radius:99px;display:none;z-index:9;max-width:92%;text-align:center}
+.cf,.fh{position:fixed;z-index:5;pointer-events:none}.cf{top:-30px;animation:fall 3s linear forwards}.fh{animation:floatup 1.2s ease-out forwards}
+@keyframes sw{0%,100%{transform:rotateY(-24deg) rotateZ(-4deg)}50%{transform:rotateY(24deg) rotateZ(4deg)}}
+@keyframes bob{50%{transform:translateY(-8px)}}
+@keyframes wv{50%{transform:translateY(-9px) rotate(-2deg)}}
+@keyframes blink{0%,94%,100%{transform:scaleY(1)}97%{transform:scaleY(.1)}}
+@keyframes wave{0%,100%{transform:rotate(-10deg)}50%{transform:rotate(22deg)}}
+@keyframes pop{from{opacity:0;transform:translateY(26px) rotateX(-28deg) scale(.92)}to{opacity:1;transform:none}}
+@keyframes drift{from{transform:translateX(-5%)}to{transform:translateX(5%)}}
+@keyframes rise{from{transform:translateY(0) rotate(-8deg)}to{transform:translateY(-115vh) rotate(8deg)}}
+@keyframes tw{50%{transform:scale(1.35) rotate(15deg);opacity:.7}}
+@keyframes fall{to{transform:translateY(110vh) rotate(540deg)}}
+@keyframes floatup{to{transform:translateY(-90px) scale(1.6);opacity:0}}
+@keyframes shake{25%{transform:translateX(-7px)}75%{transform:translateX(7px)}}
+@keyframes okp{50%{transform:scale(1.06)}}
+@keyframes jelly{0%,100%{transform:scale(1)}30%{transform:scale(1.15,.82)}60%{transform:scale(.9,1.12)}}
+@keyframes shine{0%,55%{left:-60%}100%{left:140%}}
+@keyframes pulse{50%{transform:translateX(-50%) scale(1.04)}}
+@keyframes wob{50%{transform:rotate(1.5deg) translateY(-3px)}}
+@keyframes tearf{0%{transform:translateY(0);opacity:1}100%{transform:translateY(14px);opacity:0}}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style></head><body><div class="bg" aria-hidden="true"><i></i><i></i><i></i><b>🎈</b><b>💗</b><b>⭐</b><b>🫧</b><b>🎈</b></div><div id="app"></div><div id="toast" role="status"></div>
+<script>
+const app=document.getElementById('app'),$=i=>document.getElementById(i);
+const api=async(u,m='GET',b)=>{const r=await fetch('/api'+u,{method:m,headers:{'Content-Type':'application/json'},body:b?JSON.stringify(b):undefined});const j=await r.json().catch(()=>({}));if(!r.ok)throw new Error(j.error||'Error');return j};
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const isImg=v=>/^(\/|http)/.test(v||'');
+const icon=(v,k)=>v?(isImg(v)?`<span class="pic"><img src="${esc(v)}" alt=""></span>`:`<span class="pic">${v}</span>`):`<span class="pic l">${String.fromCharCode(65+k)}</span>`;
+const LS={get:(k,d)=>{try{return JSON.parse(localStorage.getItem(k))??d}catch{return d}},set:(k,v)=>localStorage.setItem(k,JSON.stringify(v))};
+const LANGS=[['en','🇬🇧','English'],['hi','🇮🇳','हिन्दी'],['ja','🇯🇵','日本語'],['ko','🇰🇷','한국어'],['es','🇪🇸','Español'],['fr','🇫🇷','Français'],['de','🇩🇪','Deutsch'],['it','🇮🇹','Italiano'],['ar','🇸🇦','العربية'],['fil','🇵🇭','Filipino']];
+// Nayi language: T.ja={...} jodo (jo key na ho wo English se aati hai)
+const T={
+en:{title:'How well do you know me?',tag:'Find your fake friends',create:'Create quiz',qlang:'Language of your quiz',how:'How to play?',
+h1:'Create your quiz',h1d:'Answer 30 quick questions about yourself.',h2:'Share with friends',h2d:'Each friend gets 10 questions. Playing again gives new ones.',h3:'Find fake friends',h3d:'See who knew you and who was just guessing.',
+yourName:"What's your name?",namePh:'Your name',needName:'Please enter your name',next:'Next',prev:'Previous',finish:'Finish',done:'Done',gender:'Choose your gender',male:'Male',female:'Female',rel:'Who are you to the quiz maker?',
+rels:{father:'Father',mother:'Mother',brother:'Brother',sister:'Sister',daughter:'Daughter',friend:'Friend',boyfriend:'Boyfriend',girlfriend:'Girlfriend',oneside:'One-side love'},
+qn:'Question',back:'Back',shareT:'share your link & find your fake friends',copy:'Copy',copied:'Link copied ✓',wa:'Share on WhatsApp',other:'Other apps',pasteMsg:'Link copied! Paste it in the app and send 💌',
+check:'Check scores',addQ:'Add my own question',redo:'Answer my 30 again',noPlay:'Nobody has played yet.',tries:'tries',correct:'Correct ✓',wrong:'Wrong ✗',
+again:'Play again (new questions)',yourScore:'You know them this much:',makeOwn:'Make my own quiz',shareMsg:'How well do you know me? Take my quiz:',save:'Save question',addOpt:'+ Option',qPh:'Write your question',del:'Remove',
+addInfo:'Text only, no pictures. 2 to 6 options. Pick the correct one.',right:'Correct option',great:'True friend! 🏆',good:'You know them well 👍',low:'Be a better friend 😅',notReady:'This quiz is not ready yet.',notHere:'This quiz was not created on this device.',optPh:'Option',people:'people',attempts:'attempts',best:'Best',tryN:'Try'},
+hi:{title:'मुझे कितना जानते हो?',tag:'अपने फ़र्ज़ी दोस्त पहचानो',create:'क्विज़ बनाओ',qlang:'अपने क्विज़ की भाषा',how:'कैसे खेलें?',
+h1:'अपना क्विज़ बनाओ',h1d:'अपने बारे में 30 सवालों के जवाब दो।',h2:'दोस्तों को भेजो',h2d:'हर दोस्त को 10 सवाल मिलेंगे। दोबारा खेलने पर नए सवाल।',h3:'फ़र्ज़ी दोस्त पहचानो',h3d:'देखो किसने सच में जाना और किसने तुक्का मारा।',
+yourName:'तुम्हारा नाम क्या है?',namePh:'तुम्हारा नाम',needName:'कृपया नाम लिखो',next:'आगे',prev:'पिछला',finish:'खत्म करो',done:'हो गया',gender:'अपना जेंडर चुनो',male:'लड़का',female:'लड़की',rel:'तुम क्विज़ बनाने वाले के कौन हो?',
+rels:{father:'पापा',mother:'मम्मी',brother:'भाई',sister:'बहन',daughter:'बेटी',friend:'दोस्त',boyfriend:'बॉयफ्रेंड',girlfriend:'गर्लफ्रेंड',oneside:'वन-साइड लव'},
+qn:'सवाल',back:'पीछे',shareT:'अपना लिंक भेजो और फ़र्ज़ी दोस्त ढूँढो',copy:'कॉपी',copied:'लिंक कॉपी हो गया ✓',wa:'व्हाट्सऐप पर भेजो',other:'दूसरे ऐप',pasteMsg:'लिंक कॉपी हो गया! ऐप में पेस्ट करके भेज दो 💌',
+check:'स्कोर देखो',addQ:'अपना सवाल जोड़ो',redo:'अपने 30 जवाब दोबारा दो',noPlay:'अभी किसी ने नहीं खेला।',tries:'बार खेला',correct:'सही ✓',wrong:'गलत ✗',
+again:'दोबारा खेलो (नए सवाल)',yourScore:'तुम उन्हें इतना जानते हो:',makeOwn:'अपना क्विज़ बनाओ',shareMsg:'मुझे कितना जानते हो? मेरा क्विज़ खेलो:',save:'सवाल सेव करो',addOpt:'+ ऑप्शन',qPh:'अपना सवाल लिखो',del:'हटाओ',
+addInfo:'सिर्फ़ टेक्स्ट, फ़ोटो नहीं। 2 से 6 ऑप्शन। सही वाला चुनो।',right:'सही ऑप्शन',great:'पक्के दोस्त हो! 🏆',good:'अच्छे से जानते हो 👍',low:'थोड़ी और दोस्ती करो 😅',notReady:'ये क्विज़ अभी तैयार नहीं है।',notHere:'ये क्विज़ इस डिवाइस पर नहीं बना था।',optPh:'ऑप्शन',people:'लोग',attempts:'बार जवाब',best:'सबसे अच्छा',tryN:'कोशिश'}
+};
+let S=LS.get('S',{lang:'en'});
+const t=k=>(T[S.lang]&&T[S.lang][k])||T.en[k];
+const relL=k=>((T[S.lang]||{}).rels||T.en.rels)[k];
+const dirFix=()=>{document.documentElement.dir=S.lang==='ar'?'rtl':'ltr';document.documentElement.lang=S.lang};
+const RE={father:'👨',mother:'👩',brother:'🧑',sister:'👧',daughter:'🧒',friend:'🤝',boyfriend:'💙',girlfriend:'💖',oneside:'💔'};
+// ---- cute characters: blink, wave, eyes follow your finger/mouse, happy/sad moods ----
+const face=(k,s=90,mood='')=>{const b=k==='bear'||k==='male',g=b?'url(#gb)':'url(#gp)',ear=b?'#c98a62':'#3b2a2a',o='#4a2f2f',ch=b?'#ffae42':'#ff9fb8',ink='#2b1d1d';
+const eye=x=>mood==='happy'?`<path d="M${x-6} 54q6-10 12 0" stroke="${ink}" stroke-width="3.4" fill="none" stroke-linecap="round"/>`:`<g class="eye"><g class="pp"><circle cx="${x}" cy="52" r="4.8" fill="${ink}"/><circle cx="${x+1.8}" cy="50.3" r="1.7" fill="#fff"/><circle cx="${x-1.5}" cy="54.5" r=".9" fill="#fff"/></g></g>`;
+const mouth=mood==='happy'?`<path d="M42 62q8 13 16 0z" fill="#e0556f" stroke="${ink}" stroke-width="2.5" stroke-linejoin="round"/>`:mood==='sad'?`<path d="M44 69q6-7 12 0" stroke="${ink}" stroke-width="3" fill="none" stroke-linecap="round"/>`:`<path d="M44 63q6 6 12 0" stroke="${ink}" stroke-width="3" fill="none" stroke-linecap="round"/>`;
+const extra=mood==='sad'?`<path d="M30 42l12 4M70 42l-12 4" stroke="${ink}" stroke-width="2.6" stroke-linecap="round"/><path class="tear" d="M67 60q-5 8 0 11q5-3 0-11z" fill="#6cc4ff" stroke="#3a9be0" stroke-width="1.2"/>`:mood==='happy'?`<text x="8" y="26" font-size="13">✨</text><text x="80" y="22" font-size="13">💖</text>`:'';
+return `<span class="c3"><svg class="chr" width="${s}" height="${s*1.1}" viewBox="0 0 100 110" aria-hidden="true"><defs><radialGradient id="gb" cx=".35" cy=".3" r=".85"><stop offset="0" stop-color="#f7cfae"/><stop offset="1" stop-color="#c98458"/></radialGradient><radialGradient id="gp" cx=".35" cy=".3" r=".85"><stop offset="0" stop-color="#fff"/><stop offset="1" stop-color="#cfdcec"/></radialGradient></defs>
+<ellipse class="arm al" cx="21" cy="90" rx="8" ry="14" fill="${g}" stroke="${o}" stroke-width="3"/><ellipse class="arm ar" cx="79" cy="90" rx="8" ry="14" fill="${g}" stroke="${o}" stroke-width="3"/>
+<ellipse cx="50" cy="95" rx="27" ry="17" fill="${g}" stroke="${o}" stroke-width="3"/><ellipse cx="50" cy="98" rx="14" ry="9" fill="#fff" opacity=".45"/>
+<circle cx="22" cy="24" r="14" fill="${ear}" stroke="${o}" stroke-width="3"/><circle cx="78" cy="24" r="14" fill="${ear}" stroke="${o}" stroke-width="3"/><circle cx="22" cy="24" r="6" fill="#ffb7a8" opacity=".75"/><circle cx="78" cy="24" r="6" fill="#ffb7a8" opacity=".75"/>
+<circle cx="50" cy="55" r="38" fill="${g}" stroke="${o}" stroke-width="3"/><ellipse cx="36" cy="33" rx="12" ry="6" fill="#fff" opacity=".4" transform="rotate(-25 36 33)"/>
+<ellipse cx="30" cy="64" rx="8" ry="6" fill="${ch}" opacity=".8"/><ellipse cx="70" cy="64" rx="8" ry="6" fill="${ch}" opacity=".8"/>
+${eye(38)}${eye(62)}<ellipse cx="50" cy="58" rx="3.6" ry="2.6" fill="${ink}"/>${mouth}${extra}</svg></span>`};
+const show=h=>{app.innerHTML=h;window.scrollTo(0,0)};
+const go=p=>{history.pushState(0,'',p);route()};
+const toast=m=>{const e=$('toast');e.textContent=m;e.style.display='block';clearTimeout(toast.h);toast.h=setTimeout(()=>e.style.display='none',2800)};
+const fail=e=>{show(`<div class="card"><h2>😿 Oops</h2><p class="err" style="text-align:center">${esc(e.message)}</p><button class="primary" onclick="go('/')">${t('makeOwn')}</button></div>`)};
+const bar=()=>`<div class="top"><button class="bk" id="bk" aria-label="${t('back')}">‹</button><div class="duo">${face('bear',44)}${face('panda',44)}</div><span style="width:46px"></span></div>`;
+const wave=s=>s.split(' ').map((w,i)=>`<span style="--i:${i}">${esc(w)}</span>`).join(' ');
+const still=()=>matchMedia('(prefers-reduced-motion:reduce)').matches;
+const burst=(list,n,x,y)=>{if(still())return;for(let i=0;i<n;i++){const s=document.createElement('span');s.textContent=list[i%list.length];s.style.fontSize=16+Math.random()*18+'px';
+  if(x==null){s.className='cf';s.style.left=Math.random()*100+'vw';s.style.animationDelay=Math.random()*1.2+'s'}else{s.className='fh';s.style.left=x+(Math.random()-.5)*70+'px';s.style.top=y+(Math.random()-.5)*30+'px'}
+  document.body.appendChild(s);setTimeout(()=>s.remove(),4500)}};
+addEventListener('pointermove',e=>{const r=document.documentElement.style;r.setProperty('--ex',((e.clientX/innerWidth-.5)*2).toFixed(2));r.setProperty('--ey',((e.clientY/innerHeight-.5)*2).toFixed(2))});
+document.addEventListener('click',e=>{const c=e.target.closest('.c3');if(c){c.classList.add('jl');setTimeout(()=>c.classList.remove('jl'),650);burst(['💖'],3,e.clientX,e.clientY)}});
+const prog=(p,g)=>`<div class="barw"><div class="bar"><i style="width:${p}%"></i></div><span class="wk" style="left:calc(${p}% - 14px)">${face(g,30)}</span></div>`;
+const optRow=(q,o,k,cls,mk)=>`<button class="opt ${cls}" data-k="${k}" disabled>${icon(q.ic&&q.ic[k],k)}<span class="tx">${esc(o)}</span><span class="mk">${mk}</span></button>`;
+
+// Sawaal ek ek karke. check(q,k) ho (dost ka mode) to turant sahi/galat tick + mascot ka mood; jawab lock.
+function runner(qs,onDone,check,g='male'){
+  let i=0,busy=false;const ans={};
+  const draw=()=>{
+    const q=qs[i];busy=false;
+    show(`${bar()}${prog(i/qs.length*100,g)}<p class="muted" style="text-align:center">${t('qn')} ${i+1}/${qs.length}</p>
+    <div class="card q"><div class="ms" id="ms">${face(g,92)}</div><h2>${esc(q.text)}</h2>${q.options.map((o,k)=>`<button class="opt ${!check&&ans[q.id]===k?'sel':''}" data-k="${k}">${icon(q.ic&&q.ic[k],k)}<span class="tx">${esc(o)}</span><span class="mk"></span></button>`).join('')}
+    <div id="nx"></div></div>`);
+    $('bk').onclick=()=>{if(check)go('/');else if(i){i--;draw()}else history.back()};
+    const ops=[...app.querySelectorAll('.opt')];
+    ops.forEach(b=>b.onclick=async()=>{
+      if(busy)return;busy=true;const k=+b.dataset.k;ans[q.id]=k;
+      if(!check){b.classList.add('sel');return setTimeout(()=>{if(i<qs.length-1){i++;draw()}else onDone(ans)},220)}
+      try{const right=await check(q,k);
+        ops.forEach(o=>{o.classList.add('locked');o.disabled=true});
+        const mk=(o,c,e)=>{o.classList.add(c);o.querySelector('.mk').textContent=e};
+        const okk=k===right;if(okk){mk(b,'ok','✅');burst(['💖','✨','⭐'],10)}else{mk(b,'no','❌');mk(ops[right],'ok','✅')}
+        $('ms').innerHTML=face(g,92,okk?'happy':'sad');if(!okk)$('ms').classList.add('no');
+        $('nx').innerHTML=`<button class="primary" id="nb" style="margin-top:14px">${i<qs.length-1?t('next')+' ›':t('finish')+' 🎉'}</button>`;
+        $('nb').onclick=()=>{if(i<qs.length-1){i++;draw()}else onDone(ans)};$('nb').focus();
+      }catch(e){busy=false;toast(e.message)}});
+  };draw();
+}
+const wiz=(pages,done)=>{let i=0;const d={};const run=()=>pages[i](d,()=>{if(++i<pages.length)run();else done(d)},()=>{if(i){i--;run()}else go('/')});run()};
+const choice=(p,title,items,onPick)=>{
+  show(`${bar()}<h1>${title}</h1><div class="grid">${items.map(i=>`<button class="opt pick" data-v="${i.v}"><span class="em">${i.e||''}</span>${esc(i.l)}</button>`).join('')}</div>`);
+  $('bk').onclick=p;app.querySelectorAll('.pick').forEach(b=>b.onclick=()=>onPick(b.dataset.v))};
+const P={
+ name:(d,n,p)=>{show(`${bar()}<div class="card"><div class="duo">${face('bear',74)}${face('panda',74)}</div><h2>${t('yourName')}</h2><input id="v" maxlength="30" value="${esc(d.name||LS.get('name',''))}" placeholder="${t('namePh')}" autocomplete="off"><p class="err" id="e"></p><button class="primary" id="ok">${t('next')} ›</button></div>`);
+  $('bk').onclick=p;const g=()=>{const v=$('v').value.trim();if(!v)return $('e').textContent=t('needName');d.name=v;LS.set('name',v);n()};$('ok').onclick=g;$('v').onkeydown=e=>{if(e.key==='Enter')g()}},
+ gender:(d,n,p)=>{show(`${bar()}<p class="muted" style="text-align:center">hi, <b style="color:#e0a000">${esc(d.name)}</b> 👋</p><h1>${t('gender')}</h1><div class="grid g2"><button class="opt pick" data-v="male">${face('male',110)}<br>${t('male')}</button><button class="opt pick" data-v="female">${face('female',110)}<br>${t('female')}</button></div>`);
+  $('bk').onclick=p;app.querySelectorAll('.pick').forEach(b=>b.onclick=()=>{d.gender=b.dataset.v;n()})},
+ rel:(d,n,p)=>choice(p,t('rel'),Object.keys(T.en.rels).map(k=>({v:k,l:relL(k),e:RE[k]})),v=>{d.relation=v;n()}),
+ qlang:(d,n,p)=>choice(p,t('qlang'),LANGS.map(([v,f,l])=>({v,l,e:f})),v=>{d.qlang=v;n()})
+};
+
+function home(){
+  show(`<div class="hero"><span class="spk" style="left:2%;top:20px">✨</span><span class="spk" style="right:4%;top:6px;animation-delay:.8s">⭐</span><span class="spk" style="right:0;top:130px;animation-delay:1.4s">💖</span><span class="spk" style="left:0;top:140px;animation-delay:.4s">🌸</span>
+  <div class="scene"><svg class="rb" viewBox="0 0 300 150" aria-hidden="true"><path d="M14 148a136 136 0 0 1 272 0" stroke="#ff9ab6" stroke-width="13" fill="none" stroke-linecap="round"/><path d="M32 148a118 118 0 0 1 236 0" stroke="#ffd84d" stroke-width="13" fill="none" stroke-linecap="round"/><path d="M50 148a100 100 0 0 1 200 0" stroke="#7be3b0" stroke-width="13" fill="none" stroke-linecap="round"/><path d="M68 148a82 82 0 0 1 164 0" stroke="#7cc4ff" stroke-width="13" fill="none" stroke-linecap="round"/></svg>
+  <div class="duo">${face('bear',104)}${face('panda',104)}</div></div>
+  <h1 class="sticker wave">${wave(t('title'))}</h1><div class="ribbon">${t('tag')}</div></div>
+  <div class="clouds" style="margin-top:22px"><div></div></div>
+  <div class="card"><div class="dash"><div style="font-size:54px;animation:bob 3s ease-in-out infinite">🧸💬</div><h2>${t('h1')}</h2><button class="primary" id="go">${t('create')} ›</button></div></div>
+  <h2 style="margin-top:24px">${t('how')}</h2><div class="card">${[['✏️','h1'],['📤','h2'],['🏆','h3']].map(([e,k])=>`<div class="how"><span class="ico">${e}</span><div><b>${t(k)}</b><p class="muted">${t(k+'d')}</p></div></div>`).join('')}</div>`);
+  $('go').onclick=()=>wiz([P.name,P.gender,P.qlang],async d=>{try{
+    const r=await api('/quiz','POST',{name:d.name,gender:d.gender,lang:d.qlang});
+    const mine=LS.get('mine',{});mine[r.id]={token:r.token,name:d.name};LS.set('mine',mine);
+    S.lang=d.qlang;LS.set('S',S);go('/me/'+r.id)}catch(e){fail(e)}});
+}
+
+async function me(id,view){
+  const tk=(LS.get('mine',{})[id]||{}).token;
+  if(!tk)return fail(new Error(t('notHere')+' '+location.origin+'/q/'+id));
+  try{
+    const d=await api(`/quiz/${id}/me?token=${tk}`);
+    S.lang=d.lang;dirFix();   // creator apni quiz-language mein hi dekhta/jawab deta hai
+    if(!d.ready){const {questions}=await api('/base-questions?lang='+d.lang);
+      return runner(questions,async a=>{try{await api(`/quiz/${id}/answers`,'POST',{token:tk,answers:a});me(id)}catch(e){fail(e)}},null,d.gender)}
+    ({scores,addq}[view]||share)(id,tk,d);
+  }catch(e){fail(e)}
+}
+const copy=s=>{const f=()=>{const i=$('l');if(i){i.select();try{document.execCommand('copy')}catch{}}};try{navigator.clipboard.writeText(s).catch(f)}catch{f()}};
+
+function share(id,tk,d){
+  const link=location.origin+'/q/'+id,e=encodeURIComponent,mob=/Android|iPhone|iPad/i.test(navigator.userAgent),txt=t('shareMsg');
+  const B=[['instagram','📸','linear-gradient(45deg,#fdb750,#e1306c,#833ab4)','Instagram','https://www.instagram.com/direct/inbox/'],
+   ['snapchat','👻','#fffc00','Snapchat','https://www.snapchat.com/scan?attachmentUrl='+e(link)],
+   ['facebook','📘','#1877f2','Facebook','https://www.facebook.com/sharer/sharer.php?u='+e(link)],
+   ['messenger','💬','linear-gradient(#00b2ff,#a334fa)','Messenger',mob?'fb-messenger://share/?link='+e(link):null],
+   ['telegram','✈️','#2aabee','Telegram','https://t.me/share/url?url='+e(link)+'&text='+e(txt)],
+   ['other','🔗','#e3efff',t('other'),null]];
+  const A=h=>h?`href="${h}" ${h.startsWith('http')?'target="_blank" rel="noopener"':''}`:'href="#"';
+  show(`${bar()}<div class="card" style="text-align:center"><span class="speech">${esc(d.name)} 💬</span><div class="duo">${face(d.gender==='female'?'panda':'bear',124)}</div>
+  <h2 style="margin-top:0">${t('shareT')} 🎭</h2>
+  <div class="linkbox">🔗<input id="l" readonly value="${link}" aria-label="link"><button id="cp">${t('copy')}</button></div>
+  <a class="btn wa" id="wa" ${A('https://api.whatsapp.com/send?text='+e(txt+' '+link))}>💬 ${t('wa')}</a>
+  <div class="sh">${B.map(b=>`<a data-s="${b[0]}" ${A(b[4])}><span class="c" style="background:${b[2]}">${b[1]}</span>${b[3]}</a>`).join('')}</div>
+  <button class="primary" id="ck">🏆 ${t('check')} (${d.results.length})</button></div>
+  <button class="opt" id="aq">➕ ${t('addQ')}</button><button class="opt" id="re">🔄 ${t('redo')}</button>`);
+  $('bk').onclick=()=>go('/');
+  $('cp').onclick=()=>{copy(link);toast(t('copied'))};
+  app.querySelectorAll('.sh a').forEach(a=>a.onclick=ev=>{      // link pehle apne aap copy; phir app/website khulti hai
+    const x=B.find(y=>y[0]===a.dataset.s);copy(link);toast(t('pasteMsg'));
+    if(!x[4]){ev.preventDefault();if(navigator.share)navigator.share({title:t('title'),text:txt,url:link}).catch(()=>{})}});
+  $('wa').onclick=()=>copy(link);
+  $('ck').onclick=()=>me(id,'scores');$('aq').onclick=()=>me(id,'addq');
+  $('re').onclick=async()=>{await api(`/quiz/${id}/reset`,'POST',{token:tk});me(id)};
+}
+
+// ---- Scores: pehle sirf naam-list. Naam dabao -> (try chuno) -> ek page par ek sawaal, pictures ke saath ----
+function scores(id,tk,d){
+  const G={};d.results.forEach(r=>(G[r.pid]=G[r.pid]||{r,list:[]}).list.push(r));
+  const gs=Object.values(G),back=()=>scores(id,tk,d);
+  show(`${bar()}<h1>🏆 ${t('check')}</h1><p class="muted" style="text-align:center">${gs.length} ${t('people')} · ${d.results.length} ${t('attempts')}</p>
+  ${gs.length?gs.map((g,n)=>`<button class="person" data-n="${n}">${face(g.r.gender==='female'?'panda':'bear',44)}<span class="info"><b>${esc(g.r.player)}</b><small>${esc(relL(g.r.relation)||'')} · ${g.list.length} ${t('tries')}</small></span><span class="sc">${t('best')} ${Math.max(...g.list.map(x=>x.score))}/${g.r.total}</span></button>`).join(''):`<div class="card"><p class="muted" style="text-align:center">${t('noPlay')}</p></div>`}`);
+  $('bk').onclick=()=>me(id);
+  app.querySelectorAll('.person').forEach(b=>b.onclick=()=>{const g=gs[+b.dataset.n];g.list.length===1?review(d,g.list[0],back):tries(d,g,back)});
+}
+function tries(d,g,back){
+  show(`${bar()}<h1>${esc(g.r.player)}</h1><p class="muted" style="text-align:center">${esc(relL(g.r.relation)||'')} · ${g.list.length} ${t('tries')}</p>
+  ${g.list.map((r,n)=>`<button class="person" data-n="${n}"><span class="ico">🎯</span><span class="info"><b>${t('tryN')} ${g.list.length-n}</b><small>${new Date(r.at).toLocaleString()}</small></span><span class="sc">${r.score}/${r.total}</span></button>`).join('')}`);
+  $('bk').onclick=back;app.querySelectorAll('.person').forEach(b=>b.onclick=()=>review(d,g.list[+b.dataset.n],()=>tries(d,g,back)));
+}
+function review(d,r,back){
+  let i=0;const g=r.gender;
+  const draw=()=>{const it=r.items[i],q=d.qs[it.id],ok=it.ok,last=i===r.items.length-1;
+    show(`${bar()}${prog((i+1)/r.items.length*100,g)}<p class="muted" style="text-align:center">${esc(r.player)} · ${t('qn')} ${i+1}/${r.items.length} · <span class="sc">${r.score}/${r.total}</span></p>
+    <div class="card q"><div class="ms ${ok?'':'no'}">${face(g,92,ok?'happy':'sad')}</div><h2>${esc(q.text)}</h2>
+    ${q.options.map((o,k)=>optRow(q,o,k,k===it.chosen?(ok?'ok':'no'):(k===it.right?'ok':''),k===it.chosen?(ok?'✅':'❌'):(k===it.right?'✅':''))).join('')}
+    <h2 style="margin:16px 0 0;color:${ok?'#16a34a':'#dc2626'}">${ok?t('correct'):t('wrong')}</h2></div>
+    <div class="nav">${i?`<button id="pv">‹ ${t('prev')}</button>`:''}<button class="primary" id="nx">${last?t('done'):t('next')+' ›'}</button></div>`);
+    $('bk').onclick=back;if(i)$('pv').onclick=()=>{i--;draw()};$('nx').onclick=()=>{if(last)back();else{i++;draw()}};
+  };draw();
+}
+
+function addq(id,tk,d){
+  let n=4;
+  const opts=()=>$('co').innerHTML=Array.from({length:n},(_,k)=>`<div class="row"><input type="radio" name="ok" value="${k}" ${k===0?'checked':''} aria-label="${t('right')}"><input class="oi" maxlength="60" placeholder="${t('optPh')} ${k+1}"></div>`).join('');
+  show(`${bar()}<div class="card"><h2>➕ ${t('addQ')}</h2><p class="muted">${t('addInfo')}</p>
+  <textarea id="ct" rows="2" maxlength="150" placeholder="${t('qPh')}"></textarea><div id="co"></div>
+  <button id="ao">${t('addOpt')}</button> <button class="primary" id="sv" style="margin-top:12px">${t('save')}</button><p class="err" id="e"></p></div>
+  ${d.custom.map(c=>`<div class="card row" style="margin:8px 0 14px;padding:12px 18px"><span>${esc(c.text)}</span><button data-d="${c.id}">${t('del')}</button></div>`).join('')}`);
+  opts();$('bk').onclick=()=>me(id);
+  $('ao').onclick=()=>{if(n<6){const v=[...document.querySelectorAll('.oi')].map(i=>i.value),c=+document.querySelector('input[name=ok]:checked').value;n++;opts();document.querySelectorAll('.oi').forEach((i,k)=>i.value=v[k]||'');document.querySelectorAll('input[name=ok]')[c].checked=true}};
+  $('sv').onclick=async()=>{try{
+    const all=[...document.querySelectorAll('.oi')].map(i=>i.value.trim()),c=+document.querySelector('input[name=ok]:checked').value;
+    if(!all[c])throw new Error(t('right')+' ?');
+    const kept=all.map((o,k)=>[o,k]).filter(x=>x[0]);
+    await api(`/quiz/${id}/custom`,'POST',{token:tk,text:$('ct').value,options:kept.map(x=>x[0]),answer:kept.findIndex(x=>x[1]===c)});me(id,'addq');
+  }catch(er){$('e').textContent=er.message}};
+  app.querySelectorAll('[data-d]').forEach(b=>b.onclick=async()=>{await api(`/quiz/${id}/custom/${b.dataset.d}?token=${tk}`,'DELETE');me(id,'addq')});
+}
+
+// Dost: language nahi chun sakta - quiz banane wale ki language mein hi sab kuch dikhta hai
+async function play(id){
+  try{
+    const q=await api('/quiz/'+id);S.lang=q.lang;dirFix();
+    if(!q.ready)return fail(new Error(t('notReady')));
+    let pid=LS.get('pid',null);if(!pid){pid=Math.random().toString(36).slice(2)+Date.now().toString(36);LS.set('pid',pid)}
+    wiz([P.name,P.gender,P.rel],d=>begin(id,pid,d,q));
+  }catch(e){fail(e)}
+}
+async function begin(id,pid,d,q){
+  try{
+    const r=await api(`/quiz/${id}/start`,'POST',{pid,player:d.name,gender:d.gender,relation:d.relation});
+    runner(r.questions,async()=>{try{
+      const s=await api(`/attempt/${r.attempt}/submit`,'POST',{});
+      const m=s.score>=8?t('great'):s.score>=5?t('good'):t('low');
+      show(`${bar()}<div class="card" style="text-align:center"><div class="duo">${face(q.gender==='female'?'panda':'bear',116,s.score>=5?'happy':'')}</div><h2>${esc(q.name)} 💞</h2><p class="muted">${t('yourScore')}</p><p class="big">${s.score}/${s.total}</p><h2>${m}</h2>
+      <button class="primary" id="ag">🔄 ${t('again')}</button><button class="opt" style="margin-top:16px;text-align:center" onclick="go('/')">🧸 ${t('makeOwn')}</button></div>`);
+      $('bk').onclick=()=>go('/');$('ag').onclick=()=>begin(id,pid,d,q);if(s.score>=5)burst(['🎉','✨','💖','⭐','🎈'],24);
+    }catch(e){fail(e)}},(qq,k)=>api(`/attempt/${r.attempt}/answer`,'POST',{qid:qq.id,choice:k}).then(x=>x.right),q.gender);
+  }catch(e){fail(e)}
+}
+function route(){S=LS.get('S',{lang:'en'});dirFix();const p=location.pathname.split('/');if(p[1]==='me')me(p[2]);else if(p[1]==='q')play(p[2]);else home()}
+window.onpopstate=route;route();
+</script></body></html>

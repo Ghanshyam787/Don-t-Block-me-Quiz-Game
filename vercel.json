@@ -1,0 +1,1 @@
+{"version":2,"builds":[{"src":"server.js","use":"@vercel/node","config":{"includeFiles":["public/**","questions.json","translations.json"]}}],"routes":[{"src":"/(.*)","dest":"/server.js"}]}
